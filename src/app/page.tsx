@@ -57,7 +57,7 @@ const Home: React.FC = () => {
   // 페이지가 변경될 때 데이터를 가져오는 useEffect
   useEffect(() => {
     fetchData(query, 1);
-  }, [fetchData, query]);  
+  }, [query]); 
 
   // 더 많은 게시물 요청 (페이지 증가)
   const loadMoreItems = () => {
