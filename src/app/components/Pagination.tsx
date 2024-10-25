@@ -24,8 +24,8 @@ const Pagination = ({
   const totalPages = Math.ceil(totalPosts / postsPerPage);
 
   // 현재 페이지 번호의 그룹 설정 (currentPage에 맞는 범위 계산)
-  let startPage = Math.max(1, currentPage - Math.floor(maxPageDisplay / 2));
-  let endPage = Math.min(totalPages, startPage + maxPageDisplay - 1);
+  var startPage = Math.max(1, currentPage - Math.floor(maxPageDisplay / 2));
+  var endPage = Math.min(totalPages, startPage + maxPageDisplay - 1);
 
   // 만약 끝 페이지가 마지막 페이지보다 작을 경우, 시작 페이지 조정
   if (endPage - startPage < maxPageDisplay - 1) {
