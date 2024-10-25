@@ -34,7 +34,7 @@ const Home: React.FC = () => {
   const fetchData = async (searchQuery: string, page: number) => {
     try {
       setLoading(true); // 로딩 시작
-      const response = await axios.get("http://localhost:5000/api/search", {
+      const response = await axios.get("https://apiprojectserver-production.up.railway.app/api/search", {
         params: { query: searchQuery, page, display: itemsPerPage }, // 입력된 쿼리와 페이지 번호로 요청
       });
       const newItems = response.data.items;
