@@ -1,101 +1,144 @@
-import Image from "next/image";
+"use client";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Pagination from "./components/Pagination";
 
-export default function Home() {
+interface Item {
+  title: string;
+  link: string;
+  image: string;
+  lprice: string;
+  hprice: string;
+  mallName: string;
+  productId: string;
+}
+
+const Home: React.FC = () => {
+  const [items, setItems] = useState<Item[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [query, setQuery] = useState<string>("쇼핑"); // 검색어 상태 추가
+  const [hasMore, setHasMore] = useState(true); // 추가 데이터 여부
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
+  const [itemsPerPage] = useState(18); // 페이지 당 게시물 수
+
+  // 현재 페이지의 게시물 계산
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstitem = indexOfLastItem - itemsPerPage;
+  const currentitems = items.slice(indexOfFirstitem, indexOfLastItem); // 현재 페이지에 맞는 게시물
+
+  // 페이지 변경 함수
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  // 데이터를 서버에서 받아오는 함수
+  const fetchData = async (searchQuery: string, page: number) => {
+    try {
+      setLoading(true); // 로딩 시작
+      const response = await axios.get("http://localhost:5000/api/search", {
+        params: { query: searchQuery, page, display: itemsPerPage }, // 입력된 쿼리와 페이지 번호로 요청
+      });
+      const newItems = response.data.items;
+
+      // 받아온 데이터가 있으면 상태 업데이트
+      if (newItems.length > 0) {
+        setItems((prevItems) => [...prevItems, ...newItems]); // 이전 게시물에 추가
+      } else {
+        setHasMore(false); // 더 이상 데이터가 없으면 'hasMore'를 false로 설정
+      }
+    } catch (error) {
+      console.error("에러:", error);
+      setError("에러가 발생했습니다.");
+    } finally {
+      setLoading(false); // 로딩 종료
+    }
+  };
+
+  // 페이지가 변경될 때 데이터를 가져오는 useEffect
+  useEffect(() => {
+    if (query) {
+      fetchData(query, currentPage); // 검색 쿼리와 페이지에 맞게 데이터 요청
+    }
+  }, [currentPage, query]); // currentPage와 query가 변경될 때마다 실행
+
+  // 더 많은 게시물 요청 (페이지 증가)
+  const loadMoreItems = () => {
+    if (hasMore && !loading) {
+      setCurrentPage((prevPage) => prevPage + 1); // 페이지 증가
+    }
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault(); // 폼 제출 시 페이지 새로 고침 방지
+    setLoading(false);
+    setItems([]); // 검색어 입력 시 이전 항목 초기화
+    setHasMore(true); // 추가 항목 요청을 허용하도록 설정
+    setCurrentPage(1); // 페이지를 1로 초기화
+    fetchData(query, 1); // 첫 페이지로 데이터 요청
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
+    <div className="bg-stone-100 text-stone-700 min-h-screen">
+      <div className="w-full">
+        <h1 className="text-2xl font-bold mb-3">네이버 쇼핑 API 검색</h1>
+        <form
+          onSubmit={handleSearch}
+          className="text-sm w-2/6 search rounded-md overflow-hidden border"
+        >
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)} // 검색어 상태 업데이트
+            placeholder="검색어를 입력하세요"
+            className="w-9/12 px-4 py-1"
+          />
+          <button
+            type="submit"
+            className="bg-white py-1 w-3/12 font-bold"
+          >
+            검색
+          </button>
+        </form>
+      </div>
+      <ul className="flex flex-wrap gap-3 py-10 itemList">
+        {currentitems.map((item) => (
+          <li
+            key={item.productId}
+            className="item bg-slate-50 overflow-hidden rounded-lg border"
+          >
+            <a href={item.link} target="_blank" rel="noopener noreferrer">
+              <div className="overflow-hidden">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-40 object-cover"
+                />
+              </div>
+              <div className="p-2">
+                <h2 className="mb-1 text-nowrap underline font-medium">
+                  <span dangerouslySetInnerHTML={{ __html: item.title }}/>
+                  <span dangerouslySetInnerHTML={{ __html: item.title }} className="ml-5"/>
+                  <span dangerouslySetInnerHTML={{ __html: item.title }} className="ml-5"/>
+                </h2>
+                <p className="text-sm">가격: {item.lprice}원</p>
+              </div>
+            </a>
           </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+        ))}
+      </ul>
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      {/* Pagination 컴포넌트 */}
+      <Pagination
+        postsPerPage={itemsPerPage}
+        totalPosts={items.length}
+        paginate={paginate}
+        currentPage={currentPage}
+        loadMoreItems={loadMoreItems}
+        hasMore={hasMore}
+        loading={loading}
+      />
     </div>
   );
-}
+};
+
+export default Home;

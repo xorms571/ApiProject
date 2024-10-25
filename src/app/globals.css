@@ -19,3 +19,55 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+.item {
+  width: calc(16.666667% - 10px);
+  transition: all .3s;
+  overflow: hidden;
+}
+.item:hover{
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  background: #fff;
+  color: #292524
+}
+.item > a > div > img {
+  transition: scale 0.2s;
+}
+.item:hover > a > div > img {
+  scale: 1.2;
+}
+
+/* 슬라이드 애니메이션 정의 */
+@keyframes slide {
+  0% {
+    transform: translateX(0); /* 시작 위치 */
+  }
+  100% {
+    transform: translateX(-100%); /* 왼쪽으로 텍스트 전체 너비 이동 */
+  }
+}
+
+/* hover 시 애니메이션 일시 정지 */
+.item:hover h2 {
+  animation: slide 5s linear infinite; /* 무한 애니메이션 적용 */
+}
+.bg-stone-100{
+  padding: 5vh 5vw;
+}
+
+@media (max-width: 800px) {
+  .itemList {
+    font-size: .8em;
+  }
+  .item {
+    width: calc(50% - 6px);
+  }
+  .item > a > div:first-child {
+    height: 35vw;
+  }
+  .item > a > div:first-child > img{
+    height: 100%;
+  }
+  .search {
+    width: 100%;
+  }
+}
