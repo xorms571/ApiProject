@@ -79,7 +79,7 @@ const Pagination = ({
         {/* "더 보기" 버튼 - 페이지네이션과 별도 */}
         {hasMore && !loading && (
           <div>
-            <button className="ml-0 border px-2" onClick={loadMoreItems}>
+            <button className="ml-2 border px-2" onClick={loadMoreItems}>
               &gt;
             </button>
           </div>

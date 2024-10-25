@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "./components/Pagination";
-import Image from "next/image";
 
 interface Item {
   title: string;
@@ -56,8 +55,10 @@ const Home: React.FC = () => {
 
   // 페이지가 변경될 때 데이터를 가져오는 useEffect
   useEffect(() => {
-    fetchData(query, 1);
-  }, [query]); 
+    if (query) {
+      fetchData(query, currentPage); // 검색 쿼리와 페이지에 맞게 데이터 요청
+    }
+  }, [currentPage, query]); // currentPage와 query가 변경될 때마다 실행
 
   // 더 많은 게시물 요청 (페이지 증가)
   const loadMoreItems = () => {
@@ -106,7 +107,7 @@ const Home: React.FC = () => {
           >
             <a href={item.link} target="_blank" rel="noopener noreferrer">
               <div className="overflow-hidden">
-                <Image
+                <img
                   src={item.image}
                   alt={item.title}
                   className="w-full h-40 object-cover"
