@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "./components/Pagination";
+import Image from "next/image";
 
 interface Item {
   title: string;
@@ -34,9 +35,12 @@ const Home: React.FC = () => {
   const fetchData = async (searchQuery: string, page: number) => {
     try {
       setLoading(true); // 로딩 시작
-      const response = await axios.get("https://apiprojectserver-production.up.railway.app/api/search", {
-        params: { query: searchQuery, page, display: itemsPerPage }, // 입력된 쿼리와 페이지 번호로 요청
-      });
+      const response = await axios.get(
+        "https://apiprojectserver-production.up.railway.app/api/search",
+        {
+          params: { query: searchQuery, page, display: itemsPerPage }, // 입력된 쿼리와 페이지 번호로 요청
+        }
+      );
       const newItems = response.data.items;
 
       // 받아온 데이터가 있으면 상태 업데이트
@@ -91,39 +95,50 @@ const Home: React.FC = () => {
             placeholder="검색어를 입력하세요"
             className="w-9/12 px-4 py-1"
           />
-          <button
-            type="submit"
-            className="bg-white py-1 w-3/12 font-bold"
-          >
+          <button type="submit" className="bg-white py-1 w-3/12 font-bold">
             검색
           </button>
         </form>
       </div>
       <ul className="flex flex-wrap gap-3 py-10 itemList">
-        {currentitems.map((item) => (
-          <li
-            key={item.productId}
-            className="item bg-slate-50 overflow-hidden rounded-lg border"
-          >
-            <a href={item.link} target="_blank" rel="noopener noreferrer">
-              <div className="overflow-hidden">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-40 object-cover"
-                />
-              </div>
-              <div className="p-2">
-                <h2 className="mb-1 text-nowrap underline font-medium">
-                  <span dangerouslySetInnerHTML={{ __html: item.title }}/>
-                  <span dangerouslySetInnerHTML={{ __html: item.title }} className="ml-5"/>
-                  <span dangerouslySetInnerHTML={{ __html: item.title }} className="ml-5"/>
-                </h2>
-                <p className="text-sm">가격: {item.lprice}원</p>
-              </div>
-            </a>
-          </li>
-        ))}
+        {loading ? (
+          <p className="w-full h-96 flex justify-center items-center">
+            로딩중...
+          </p>
+        ) : (
+          currentitems.map((item) => (
+            <li
+              key={item.productId}
+              className="item bg-slate-50 overflow-hidden rounded-lg border"
+            >
+              <a href={item.link} target="_blank" rel="noopener noreferrer">
+                <div className="overflow-hidden">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    width={720}
+                    height={160}
+                    className="w-full h-40 object-cover"
+                  />
+                </div>
+                <div className="p-2">
+                  <h2 className="mb-1 text-nowrap underline font-medium">
+                    <span dangerouslySetInnerHTML={{ __html: item.title }} />
+                    <span
+                      dangerouslySetInnerHTML={{ __html: item.title }}
+                      className="ml-5"
+                    />
+                    <span
+                      dangerouslySetInnerHTML={{ __html: item.title }}
+                      className="ml-5"
+                    />
+                  </h2>
+                  <p className="text-sm">가격: {item.lprice}원</p>
+                </div>
+              </a>
+            </li>
+          ))
+        )}
       </ul>
       {error && <p style={{ color: "red" }}>{error}</p>}
 
