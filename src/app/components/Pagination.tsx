@@ -38,14 +38,14 @@ const Pagination = ({
   }
 
   return (
-    <nav className="mt-4">
+    <nav>
       <ul className="flex justify-center gap-1 items-center">
         {/* 첫 페이지 버튼 */}
         <li>
           <button
             onClick={() => paginate(1)}
             disabled={currentPage === 1}
-            className="ml-0 border px-2"
+            className="ml-0 border px-2 rounded-md bg-white"
           >
             &lt;&lt;
           </button>
@@ -56,7 +56,7 @@ const Pagination = ({
           <button
             onClick={() => paginate(currentPage - 1)}
             disabled={currentPage === 1}
-            className="ml-0 mr-2 border px-2"
+            className="ml-0 mr-2 border px-2 rounded-md bg-white"
           >
             &lt;
           </button>
@@ -79,7 +79,7 @@ const Pagination = ({
         {/* "더 보기" 버튼 - 페이지네이션과 별도 */}
         {hasMore && !loading && (
           <div>
-            <button className="ml-2 border px-2" onClick={loadMoreItems}>
+            <button className="ml-2 border px-2 rounded-md bg-white" onClick={loadMoreItems}>
               &gt;
             </button>
           </div>
@@ -90,7 +90,7 @@ const Pagination = ({
           <button
             onClick={() => paginate(totalPages)}
             disabled={currentPage === totalPages}
-            className="ml-0 border px-2"
+            className="ml-0 border px-2 rounded-md bg-white"
           >
             &gt;&gt;
           </button>

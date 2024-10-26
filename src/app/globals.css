@@ -54,10 +54,21 @@ body {
   padding: 5vh 5vw;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1200px) {
   .itemList {
-    font-size: .8em;
+    justify-content: center;
   }
+  .item {
+    width: calc(33% - 6px);
+  }
+  .item > a > div:first-child {
+    height: 35vw;
+  }
+  .item > a > div:first-child > img{
+    height: 100%;
+  }
+}
+@media (max-width: 800px) {
   .item {
     width: calc(50% - 6px);
   }
