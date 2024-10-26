@@ -28,7 +28,7 @@ const Page: React.FC = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   const fetchNews = async (searchQuery: string, page: number) => {
     try {
-      const response = await axios.get("http://localhost:5000/api/news", {
+      const response = await axios.get("https://apiprojectserver-production.up.railway.app/api/news", {
         params: { q: searchQuery, page, display: itemsPerPage }, // 예시 검색어
       });
       const newItems = response.data.items;
