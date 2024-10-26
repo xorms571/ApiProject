@@ -10,7 +10,7 @@ interface NewsItem {
   link: string;
   description: string;
 }
-const page: React.FC = () => {
+const Page: React.FC = () => {
   const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -130,4 +130,4 @@ const page: React.FC = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -16,7 +16,7 @@ interface Item {
   productId: string;
 }
 
-const page: React.FC = () => {
+const Page: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -162,4 +162,4 @@ const page: React.FC = () => {
   );
 };
 
-export default page;
+export default Page;
