@@ -4,7 +4,6 @@ import axios from "axios";
 import Image from "next/image";
 import kOnzy from "/public/kOnzy.gif";
 import Pagination from "../components/Pagination";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 interface NewsItem {
   title: string;
@@ -16,7 +15,6 @@ type NewsProps = {
   itemsPerPage: number;
 };
 const News = ({ itemsPerPage, windowWidth }: NewsProps) => {
-  const pathname = usePathname();
   const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
