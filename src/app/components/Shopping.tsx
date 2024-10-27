@@ -91,7 +91,7 @@ const Shopping = ({ itemsPerPage, windowWidth }: ShoppingProps) => {
       style={{ minHeight: width ? "20vh" : "" }}
     >
       <div
-        className={`${width ? "flex items-end justify-between" : null} w-full`}
+        className={`${width ? "flex items-end justify-between" : ''} w-full`}
       >
         <Link href={width ? "/shopping" : "#"}>
           <h1 className={`${width ? "text-lg" : "mb-3 text-2xl"} font-bold`}>
@@ -132,7 +132,7 @@ const Shopping = ({ itemsPerPage, windowWidth }: ShoppingProps) => {
             <li
               key={index}
               className={`${
-                width ? "flex items-center" : null
+                width ? "flex items-center" : ''
               } item hover:shadow-lg hover:bg-white hover:text-stone-800 bg-stone-50 text-stone-500 overflow-hidden rounded-lg border`}
               style={{
                 width: width ? "calc(33.3% - 8px)" : "",
@@ -143,7 +143,7 @@ const Shopping = ({ itemsPerPage, windowWidth }: ShoppingProps) => {
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${width ? "w-2/5 z-10" : null} shoppingImg`}
+                className={`${width ? "w-2/5 z-10" : ''} shoppingImg`}
               >
                 <div className="overflow-hidden">
                   <Image
@@ -159,13 +159,13 @@ const Shopping = ({ itemsPerPage, windowWidth }: ShoppingProps) => {
               </Link>
               <div
                 className={`${
-                  width ? "flex flex-col justify-center w-3/5" : null
+                  width ? "flex flex-col justify-center w-3/5" : ''
                 } p-2`}
               >
                 <a href={item.link} target="_blank" rel="noopener noreferrer">
                   <h2
                     className={`${
-                      width ? "text-sm" : null
+                      width ? "text-sm" : ''
                     } mb-1 text-nowrap underline font-medium`}
                   >
                     <span dangerouslySetInnerHTML={{ __html: item.title }} />

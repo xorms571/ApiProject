@@ -76,7 +76,7 @@ const News = ({ itemsPerPage, windowWidth }: NewsProps) => {
       } text-stone-600 flex flex-col justify-between h-3/6`}
     >
       <div
-        className={`${width ? "flex items-end justify-between" : null} w-full`}
+        className={`${width ? "flex items-end justify-between" : ''} w-full`}
       >
         <Link href={width ? "/news" : "#"}>
           <h1 className={`${width ? "text-lg" : "mb-3 text-2xl"} font-bold`}>
@@ -117,7 +117,7 @@ const News = ({ itemsPerPage, windowWidth }: NewsProps) => {
             <li
               key={index}
               className={`${
-                width ? "flex items-center" : null
+                width ? "flex items-center" : ''
               } item px-3 hover:shadow-lg hover:bg-white hover:text-stone-800 bg-stone-50 text-stone-500 overflow-hidden rounded-lg border`}
               style={{
                 width: width ? "calc(33.3% - 8px)" : "",
