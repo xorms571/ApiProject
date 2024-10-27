@@ -17,8 +17,8 @@ const Home = () => {
   useEffect(() => {
     setWindowWidth(window.innerWidth);
     window.addEventListener("resize", resizeWindow);
-    windowWidth < 820 ? setItemPerPage(10) : null;
-    windowWidth < 1200 ? setItemPerPage(9) : null;
+    windowWidth < 820 && setItemPerPage(10)
+    windowWidth < 1200 && setItemPerPage(9)
     return () => {
       window.removeEventListener("resize", resizeWindow);
     };
