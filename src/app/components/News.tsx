@@ -4,21 +4,25 @@ import axios from "axios";
 import Image from "next/image";
 import kOnzy from "/public/kOnzy.gif";
 import Pagination from "../components/Pagination";
-import Layout from "../components/Layout";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 interface NewsItem {
   title: string;
   link: string;
   description: string;
 }
-const Page: React.FC = () => {
+type NewsProps = {
+  windowWidth: number;
+  itemsPerPage: number;
+};
+const News = ({ itemsPerPage, windowWidth }: NewsProps) => {
+  const pathname = usePathname();
   const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [query, setQuery] = useState<string>(""); // 검색어 상태 추가
   const [hasMore, setHasMore] = useState(true); // 추가 데이터 여부
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
-  const [itemsPerPage] = useState(18); // 페이지 당 게시물 수
-
   // 현재 페이지의 게시물 계산
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstitem = indexOfLastItem - itemsPerPage;
@@ -28,9 +32,12 @@ const Page: React.FC = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   const fetchNews = async (searchQuery: string, page: number) => {
     try {
-      const response = await axios.get("https://apiprojectserver-production.up.railway.app/api/news", {
-        params: { q: searchQuery, page, display: itemsPerPage }, // 예시 검색어
-      });
+      const response = await axios.get(
+        "https://apiprojectserver-production.up.railway.app/api/news",
+        {
+          params: { q: searchQuery, page, display: itemsPerPage }, // 예시 검색어
+        }
+      );
       const newItems = response.data.items;
       // 받아온 데이터가 있으면 상태 업데이트
       if (newItems.length > 0) {
@@ -62,12 +69,22 @@ const Page: React.FC = () => {
     setCurrentPage(1); // 페이지를 1로 초기화
     fetchNews(query, 1); // 첫 페이지로 데이터 요청
   };
+  const width = windowWidth > 1200;
 
   return (
-    <div className="bg-stone-100 text-stone-700 min-h-screen flex flex-col justify-between">
-      <div className="w-full">
-        <h1 className="text-2xl font-bold mb-3">네이버 뉴스 API 검색</h1>
-        <Layout/>
+    <div
+      className={`news ${
+        width ? "bg-stone-100 border p-3 rounded-lg" : "bg-stone-100"
+      } text-stone-600 flex flex-col justify-between h-3/6`}
+    >
+      <div
+        className={`${width ? "flex items-end justify-between" : null} w-full`}
+      >
+        <Link href={width ? "/news" : "#"}>
+          <h1 className={`${width ? "text-lg" : "mb-3 text-2xl"} font-bold`}>
+            네이버 뉴스 API
+          </h1>
+        </Link>
         <form
           onSubmit={handleSearch}
           className="text-sm w-2/6 search rounded-md overflow-hidden border"
@@ -84,17 +101,33 @@ const Page: React.FC = () => {
           </button>
         </form>
       </div>
-
-      <ul className="flex flex-wrap gap-3 py-7 itemList">
+      <ul
+        className={`${
+          width ? "my-3" : "my-8"
+        } flex flex-wrap gap-3 justify-center itemList items-center`}
+      >
         {loading ? (
-          <p className="w-full flex justify-center items-center">
-            <Image src={kOnzy} alt="loading" width={50} height={50} />
-          </p>
+          <p
+          className={`${
+            width ? "h-72" : ""
+          } w-full flex justify-center items-center`}
+        >
+          <Image src={kOnzy} alt="loading" width={50} height={50} />
+        </p>
         ) : (
           currentnews.map((item, index) => (
-            <li key={index} className="p-5 border rounded-md item">
-              <a href={item.link} target="_blank" rel="noopener noreferrer">
-                <h2 className="mb-3 text-nowrap font-medium underline">
+            <li
+              key={index}
+              className={`${
+                width ? "flex items-center" : null
+              } item px-3 hover:shadow-lg hover:bg-white hover:text-stone-800 bg-stone-50 text-stone-500 overflow-hidden rounded-lg border`}
+              style={{
+                width: width ? "calc(33.3% - 8px)" : "",
+                height: width ? "10vh" : "",
+              }}
+            >
+              <Link href={item.link} className="h-full w-full" target="_blank" rel="noopener noreferrer">
+                <h2 className="mt-2 text-nowrap font-medium underline">
                   <span dangerouslySetInnerHTML={{ __html: item.title }} />
                   <span
                     dangerouslySetInnerHTML={{ __html: item.title }}
@@ -105,13 +138,13 @@ const Page: React.FC = () => {
                     className="ml-5"
                   />
                 </h2>
-                <div className="h-28 overflow-y-scroll">
+                <div className="h-20 overflow-y-scroll">
                   <span
-                    className="text-sm"
+                    className="text-xs"
                     dangerouslySetInnerHTML={{ __html: item.description }}
                   />
                 </div>
-              </a>
+              </Link>
             </li>
           ))
         )}
@@ -125,9 +158,10 @@ const Page: React.FC = () => {
         loadMoreItems={loadMoreItems}
         hasMore={hasMore}
         loading={loading}
+        windowWidth={windowWidth}
       />
     </div>
   );
 };
 
-export default Page;
+export default News;

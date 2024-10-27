@@ -1,3 +1,5 @@
+import { usePathname } from "next/navigation";
+
 type PaginationProps = {
   postsPerPage: number;
   totalPosts: number;
@@ -6,6 +8,7 @@ type PaginationProps = {
   loadMoreItems: () => void;
   hasMore: boolean;
   loading: boolean;
+  windowWidth: number;
 };
 
 const Pagination = ({
@@ -15,8 +18,9 @@ const Pagination = ({
   currentPage,
   loadMoreItems,
   hasMore,
-  loading,
+  loading,windowWidth
 }: PaginationProps) => {
+  const pathname = usePathname();
   const pageNumbers = [];
   const maxPageDisplay = 3; // 화면에 표시할 최대 페이지 번호 개수
 
@@ -39,7 +43,10 @@ const Pagination = ({
 
   return (
     <nav>
-      <ul className="flex justify-center gap-1 items-center">
+      <ul
+        className="flex justify-center gap-1 items-center"
+        style={{ justifyContent: windowWidth > 1200 && pathname==='/' ? "end" : "center" }}
+      >
         {/* 첫 페이지 버튼 */}
         <li>
           <button
@@ -79,7 +86,10 @@ const Pagination = ({
         {/* "더 보기" 버튼 - 페이지네이션과 별도 */}
         {hasMore && !loading && (
           <div>
-            <button className="ml-2 border px-2 rounded-md bg-white" onClick={loadMoreItems}>
+            <button
+              className="ml-2 border px-2 rounded-md bg-white"
+              onClick={loadMoreItems}
+            >
               &gt;
             </button>
           </div>
