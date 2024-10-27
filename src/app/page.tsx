@@ -18,7 +18,7 @@ const Home = () => {
     setWindowWidth(window.innerWidth);
     window.addEventListener("resize", resizeWindow);
     if (windowWidth < 820) setItemPerPage(10);
-    else if (windowWidth < 1200) setItemPerPage(9);
+    if (windowWidth < 1200) setItemPerPage(9);
     return () => {
       window.removeEventListener("resize", resizeWindow);
     };
