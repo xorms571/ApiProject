@@ -7,7 +7,7 @@ import User from "./components/User";
 const Home = () => {
   const [windowWidth, setWindowWidth] = useState(Number);
   const [itemsPerPage, setItemPerPage] = useState(Number); // 페이지 당 게시물 수
-  let timer: any;
+  let timer: NodeJS.Timeout;
   const resizeWindow = () => {
     clearTimeout(timer);
     timer = setTimeout(() => {
