@@ -17,8 +17,8 @@ const Home = () => {
   useEffect(() => {
     setWindowWidth(window.innerWidth);
     window.addEventListener("resize", resizeWindow);
-    windowWidth < 820 && setItemPerPage(10)
-    windowWidth < 1200 && setItemPerPage(9)
+    if (windowWidth < 820) setItemPerPage(10);
+    else if (windowWidth < 1200) setItemPerPage(9);
     return () => {
       window.removeEventListener("resize", resizeWindow);
     };
@@ -31,7 +31,7 @@ const Home = () => {
     >
       <div className="w-4/5 childContainer flex flex-col justify-between gap-5">
         <Shopping itemsPerPage={itemsPerPage} windowWidth={windowWidth} />
-        <News itemsPerPage={itemsPerPage} windowWidth={windowWidth}/>
+        <News itemsPerPage={itemsPerPage} windowWidth={windowWidth} />
       </div>
       <User />
     </div>
