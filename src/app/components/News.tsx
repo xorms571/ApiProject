@@ -4,7 +4,6 @@ import Pagination from "../components/Pagination";
 import { NewsItem } from "../page";
 import CompoTop from "./CompoTop";
 import NewsList from "./NewsList";
-import NewsList2 from "./NewsList2";
 type NewsProps = {
   windowWidth: number;
   newsPerPage: number;
