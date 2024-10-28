@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Article } from "../page";
-import Image from "next/image";
 import Link from "next/link";
 type NewsList2Props = {
   width: boolean;
