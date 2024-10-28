@@ -1,6 +1,4 @@
-import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
-
 type CompoProps = {
   width: boolean;
   handleSearch: (e: React.FormEvent) => void;
