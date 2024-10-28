@@ -9,7 +9,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #e7e5e4;
     --foreground: #ededed;
   }
 }
@@ -44,28 +44,39 @@ body {
 .item:hover h2 {
   animation: slide 6s linear infinite; /* 무한 애니메이션 적용 */
 }
-.parentContainer {
-  padding: 3vh 5vw;
+.newsItem:hover h2 {
+  animation: slide 6s linear infinite; /* 무한 애니메이션 적용 */
 }
-.user{
-  padding: 0 1vw;
+.parentContainer {
+  padding: 3vh 5vw 0 5vw;
+}
+.user {
+  margin-left: 1vw;
+}
+.childContainer {
+  gap: 1vw;
 }
 
 @media (max-width: 1200px) {
   .parentContainer {
     flex-direction: column-reverse;
   }
-  .childContainer{
+  .childContainer {
     width: 100%;
+    gap: 10vw;
+    margin-bottom: 10vw;
   }
-  .user{
+  .user {
     width: 100%;
-    padding: 5vw 0;
+    margin: 5vw 0;
   }
   .itemList {
     justify-content: center;
   }
   .item {
+    width: calc(33% - 6px);
+  }
+  .newsItem{
     width: calc(33% - 6px);
   }
   .shoppingImg > div:first-child {
@@ -79,12 +90,12 @@ body {
   .parentContainer {
     flex-direction: column-reverse;
   }
-  .childContainer{
+  .childContainer {
     width: 100%;
   }
-  .user{
+  .user {
     width: 100%;
-    padding: 5vw 0;
+    margin: 5vw 0;
   }
   .item {
     width: 100%;
@@ -92,7 +103,10 @@ body {
     display: flex;
     align-items: center;
   }
-  .shoppingImg{
+  .newsItem{
+    width: 100%;
+  }
+  .shoppingImg {
     overflow: hidden;
     z-index: 1;
     width: 40%;
