@@ -57,7 +57,7 @@ const ShoppingList = ({ currentitems, loading, width }: ShoppingListProps) => {
                 width ? "flex flex-col justify-center w-3/5" : ""
               } p-2`}
             >
-              <a href={item.link} target="_blank" rel="noopener noreferrer">
+              <Link href={item.link} target="_blank" rel="noopener noreferrer">
                 <h2
                   className={`${
                     width ? "text-sm" : ""
@@ -73,7 +73,7 @@ const ShoppingList = ({ currentitems, loading, width }: ShoppingListProps) => {
                     className="ml-5"
                   />
                 </h2>
-              </a>
+              </Link>
               <b className="text-sm">{item.mallName}</b>
               <p className="text-sm">
                 가격: <b>{item.lprice}원</b>

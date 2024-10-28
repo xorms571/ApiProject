@@ -4,6 +4,7 @@ import News from "./components/News";
 import Shopping from "./components/Shopping";
 import User from "./components/User";
 import axios from "axios";
+import NewsList2 from "./components/NewsList2";
 export interface ShoppingItem {
   title: string;
   link: string;
@@ -17,7 +18,13 @@ export interface NewsItem {
   title: string;
   link: string;
   description: string;
-  pubDate:Date;
+  pubDate: Date;
+}
+export interface Article {
+  title: string;
+  description: string;
+  url: string;
+  urlToImage: string;
 }
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -91,6 +98,7 @@ const Home = () => {
       window.removeEventListener("resize", resizeWindow);
     };
   }, [windowWidth]);
+  const width = windowWidth > 1200;
   return (
     <div
       className={`${
@@ -119,7 +127,9 @@ const Home = () => {
           setNews={setNews}
           setHasMore={setHasMore}
           setLoading={setLoading}
+          width={width}
         />
+        <NewsList2 width={width} />
       </div>
       <User windowWidth={windowWidth} />
     </div>

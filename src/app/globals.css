@@ -56,6 +56,9 @@ body {
 .childContainer {
   gap: 1vw;
 }
+.news:last-child{
+  margin-bottom: 5vw;
+}
 
 @media (max-width: 1200px) {
   .parentContainer {
@@ -116,7 +119,7 @@ body {
     height: 100%;
   }
   .item > div {
-    width: 50%;
+    width: 60%;
   }
   .search {
     width: 100%;
