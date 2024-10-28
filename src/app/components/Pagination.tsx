@@ -18,7 +18,8 @@ const Pagination = ({
   currentPage,
   loadMoreItems,
   hasMore,
-  loading,windowWidth
+  loading,
+  windowWidth,
 }: PaginationProps) => {
   const pathname = usePathname();
   const pageNumbers = [];
@@ -45,7 +46,10 @@ const Pagination = ({
     <nav>
       <ul
         className="flex justify-center gap-1 items-center"
-        style={{ justifyContent: windowWidth > 1200 && pathname==='/' ? "end" : "center" }}
+        style={{
+          justifyContent:
+            windowWidth > 1200 && pathname === "/" ? "end" : "center",
+        }}
       >
         {/* 첫 페이지 버튼 */}
         <li>

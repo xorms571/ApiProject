@@ -57,7 +57,7 @@ body {
   gap: 1vw;
 }
 .news:last-child{
-  margin-bottom: 5vw;
+  margin-bottom: 3vh;
 }
 
 @media (max-width: 1200px) {
@@ -81,6 +81,9 @@ body {
   }
   .newsItem{
     width: calc(33% - 6px);
+  }
+  .newsItem>div{
+    height: 15vw;
   }
   .shoppingImg > div:first-child {
     height: 15vw;

@@ -14,7 +14,7 @@ type NewsProps = {
   fetchNews: (searchQuery: string, page: number) => Promise<void>;
   setLoading: Dispatch<SetStateAction<boolean>>;
   setHasMore: Dispatch<SetStateAction<boolean>>;
-  width:boolean
+  width: boolean;
 };
 const News = ({
   newsPerPage,
@@ -25,7 +25,8 @@ const News = ({
   newsHasMore,
   newsLoading,
   setHasMore,
-  setLoading,width
+  setLoading,
+  width,
 }: NewsProps) => {
   const [query, setQuery] = useState<string>(""); // 검색어 상태 추가
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태

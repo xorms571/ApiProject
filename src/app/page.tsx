@@ -20,22 +20,36 @@ export interface NewsItem {
   description: string;
   pubDate: Date;
 }
-export interface Article {
+export interface News2Item {
+  source: {
+    id: string | null;
+    name: string;
+  };
+  author: string | null;
   title: string;
   description: string;
   url: string;
-  urlToImage: string;
+  urlToImage: string | null;
+  publishedAt: string;
+  content: string | null;
 }
 const Home = () => {
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true); // 추가 데이터 여부
   const [newsLoading, setNewsLoading] = useState(true);
   const [newsHasMore, setNewsHasMore] = useState(true); // 추가 데이터 여부
+  const [news2Loading, setNews2Loading] = useState(true);
+  const [news2HasMore, setNews2HasMore] = useState(true); // 추가 데이터 여부
   const [items, setItems] = useState<ShoppingItem[]>([]);
   const [news, setNews] = useState<NewsItem[]>([]);
-  const [itemsPerPage, setItemPerPage] = useState(Number); // 페이지 당 게시물 수
-  const [newsPerPage, setNewsPerPage] = useState(Number); // 페이지 당 게시물 수
+  const [news2, setNews2] = useState<News2Item[]>([]);
+  const [itemsPerPage, setItemPerPage] = useState(9); // 페이지 당 게시물 수
+  const [newsPerPage, setNewsPerPage] = useState(6); // 페이지 당 게시물 수
+  const [news2PerPage, setNews2PerPage] = useState(6); // 페이지 당 게시물 수
   const [windowWidth, setWindowWidth] = useState(Number);
+  const [category, setCategory] = useState("general");
+  const [language, setLanguage] = useState("en");
+  const [country, setCountry] = useState("us");
   const fetchData = async (searchQuery: string, page: number) => {
     try {
       setLoading(true); // 로딩 시작
@@ -61,6 +75,7 @@ const Home = () => {
   };
   const fetchNews = async (searchQuery: string, page: number) => {
     try {
+      setNewsLoading(true);
       const response = await axios.get(
         "https://apiprojectserver-production.up.railway.app/api/news",
         {
@@ -80,6 +95,29 @@ const Home = () => {
       setNewsLoading(false);
     }
   };
+  const fetchNews2 = async (searchQuery: string, page: number) => {
+    try {
+      setNews2Loading(true);
+      const res = await fetch(
+        `https://apiprojectserver-production.up.railway.app/api/news2?q=${searchQuery}&category=${category}&language=${language}&country=${country}&page=${page}&pageSize=${itemsPerPage}`
+      );
+      const articles = await res.json();
+      const filteredArticles = articles.filter(
+        (article:News2Item) => article.urlToImage && !article.title.toLowerCase().includes("removed")
+      );
+      if (filteredArticles && filteredArticles.length > 0) {
+        setNews2((prevItems) => [...prevItems, ...filteredArticles]);
+      } else {
+        setNews2HasMore(false);
+      }
+    } catch (error) {
+      console.error("Error fetching news:", error);
+    } finally {
+      setNews2Loading(false);
+    }
+};
+
+
   let timer: NodeJS.Timeout;
   const resizeWindow = () => {
     clearTimeout(timer);
@@ -90,10 +128,7 @@ const Home = () => {
   useEffect(() => {
     setWindowWidth(window.innerWidth);
     window.addEventListener("resize", resizeWindow);
-    if (windowWidth > 820) setItemPerPage(9);
-    if (windowWidth < 1200) setItemPerPage(6);
-    if (windowWidth > 820) setNewsPerPage(6);
-    if (windowWidth < 1200) setNewsPerPage(6);
+    setItemPerPage(window.innerWidth > 1200 ? 9 : 6);
     return () => {
       window.removeEventListener("resize", resizeWindow);
     };
@@ -119,6 +154,7 @@ const Home = () => {
         />
         <News
           news={news}
+          width={width}
           newsPerPage={newsPerPage}
           windowWidth={windowWidth}
           newsHasMore={newsHasMore}
@@ -127,9 +163,25 @@ const Home = () => {
           setNews={setNews}
           setHasMore={setHasMore}
           setLoading={setLoading}
-          width={width}
         />
-        <NewsList2 width={width} />
+        <NewsList2
+          windowWidth={windowWidth}
+          width={width}
+          news2={news2}
+          category={category}
+          language={language}
+          country={country}
+          news2HasMore={news2HasMore}
+          news2Loading={news2Loading}
+          news2PerPage={news2PerPage}
+          fetchNews2={fetchNews2}
+          setNews2={setNews2}
+          setNews2HasMore={setNews2HasMore}
+          setNews2Loading={setNews2Loading}
+          setCategory={setCategory}
+          setLanguage={setLanguage}
+          setCountry={setCountry}
+        />
       </div>
       <User windowWidth={windowWidth} />
     </div>
