@@ -4,6 +4,7 @@ import Link from "next/link";
 import Pagination from "./Pagination";
 import Image from "next/image";
 import kOnzy from "/public/kOnzy.gif";
+import CompoTop from "./CompoTop";
 type NewsList2Props = {
   windowWidth: number;
   width: boolean;
@@ -11,16 +12,16 @@ type NewsList2Props = {
   news2HasMore: boolean;
   news2PerPage: number;
   category: string;
-  language: string;
-  country: string;
   news2: News2Item[];
   setNews2Loading: React.Dispatch<React.SetStateAction<boolean>>;
   setNews2HasMore: React.Dispatch<React.SetStateAction<boolean>>;
   setCategory: React.Dispatch<React.SetStateAction<string>>;
-  setLanguage: React.Dispatch<React.SetStateAction<string>>;
-  setCountry: React.Dispatch<React.SetStateAction<string>>;
   setNews2: React.Dispatch<React.SetStateAction<News2Item[]>>;
-  fetchNews2: (searchQuery: string, page: number) => Promise<void>;
+  fetchNews2: (
+    searchQuery: string,
+    page: number,
+    category: string
+  ) => Promise<void>;
 };
 const NewsList2 = ({
   windowWidth,
@@ -34,11 +35,7 @@ const NewsList2 = ({
   setNews2HasMore,
   setNews2Loading,
   category,
-  country,
-  language,
   setCategory,
-  setLanguage,
-  setCountry,
 }: NewsList2Props) => {
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
@@ -50,8 +47,13 @@ const NewsList2 = ({
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   useEffect(() => {
-    fetchNews2(query, currentPage);
-  }, [currentPage]);
+    setNews2Loading(false);
+    setNews2([]);
+    setNews2HasMore(true); // 추가 항목 요청을 허용하도록 설정
+    setCurrentPage(1); // 페이지를 1로 초기화
+    setCategory(category);
+    fetchNews2(query, currentPage, category);
+  }, [currentPage, category]);
   const loadMoreItems = () => {
     if (news2HasMore && !news2Loading) {
       setCurrentPage((prevPage) => prevPage + 1); // 페이지 증가
@@ -63,7 +65,8 @@ const NewsList2 = ({
     setNews2([]); // 검색어 입력 시 이전 항목 초기화
     setNews2HasMore(true); // 추가 항목 요청을 허용하도록 설정
     setCurrentPage(1); // 페이지를 1로 초기화
-    fetchNews2(query, 1); // 첫 페이지로 데이터 요청
+    setCategory(category);
+    fetchNews2(query, 1, category); // 첫 페이지로 데이터 요청
   };
   return (
     <article
@@ -71,59 +74,16 @@ const NewsList2 = ({
         width ? "bg-stone-100 border p-3 rounded-lg" : "bg-stone-100"
       } text-stone-600 flex flex-col justify-between`}
     >
-      <div
-        className={`${width ? "flex items-center justify-between" : ""} w-full`}
-      >
-        <h1 className={`${width ? "text-lg" : "mb-3 text-2xl"} font-bold`}>
-          NEWS API
-        </h1>
-        <form
-          onSubmit={handleSearch}
-          className="bg-white text-sm w-3/6 flex justify-between search rounded-md overflow-hidden border"
-        >
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="검색어를 입력하세요"
-            className="w-4/12 pl-2"
-          />
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="w-2/12 border-l"
-          >
-            <option value="general">일반</option>
-            <option value="business">사업</option>
-            <option value="technology">기술</option>
-            <option value="sports">스포츠</option>
-            <option value="science">과학</option>
-            <option value="entertainment">연예</option>
-            <option value="health">건강</option>
-          </select>
-          <select
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-            className="w-2/12 border-l"
-          >
-            <option value="en">영어</option>
-            <option value="kr">한국어</option>
-            <option value="jp">일본어</option>
-          </select>
-          <select
-            className="w-2/12 border-l"
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
-          >
-            <option value="us">미국</option>
-            <option value="kr">한국</option>
-            <option value="jp">일본</option>
-          </select>
-          <button className="border-l font-bold w-2/12 py-1" type="submit">
-            검색
-          </button>
-        </form>
-      </div>
+      <CompoTop
+        handleSearch={handleSearch}
+        query={query}
+        setQuery={setQuery}
+        width={width}
+        title="News API"
+        select={true}
+        category={category}
+        setCategory={setCategory}
+      />
       <ul
         className={`${
           width ? "my-3" : "my-8"
@@ -160,7 +120,9 @@ const NewsList2 = ({
                     <img
                       src={article.urlToImage}
                       alt={article.title}
-                      className="w-full object-cover h-full"
+                      className={`${
+                        width ? "object-cover" : "object-cover"
+                      } w-full h-full item-img`}
                     />
                   </div>
                 )}
@@ -200,12 +162,14 @@ const NewsList2 = ({
                     dangerouslySetInnerHTML={{ __html: article.description }}
                   />
                 </div>
-                {windowWidth > 1200 ? <span
+                {windowWidth > 1200 ? (
+                  <span
                     className="text-xs block text-end mr-1 my-1"
                     dangerouslySetInnerHTML={{
                       __html: new Date(article.publishedAt).toLocaleString(),
                     }}
-                  /> : null}
+                  />
+                ) : null}
               </div>
             </li>
           ))

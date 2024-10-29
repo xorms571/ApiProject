@@ -56,7 +56,7 @@ const NewsList = ({ currentnews, newsLoading, width }: NewsListProps) => {
                   dangerouslySetInnerHTML={{ __html: item.description }}
                 />
               </div>
-              <p className="text-end mb-1 mr-1 text-sm">
+              <p className="text-end mb-1 mr-1 text-xs">
                 {new Date(item.pubDate).toLocaleString()}
               </p>
             </Link>

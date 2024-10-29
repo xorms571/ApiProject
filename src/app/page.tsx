@@ -48,8 +48,6 @@ const Home = () => {
   const [news2PerPage, setNews2PerPage] = useState(6); // 페이지 당 게시물 수
   const [windowWidth, setWindowWidth] = useState(Number);
   const [category, setCategory] = useState("general");
-  const [language, setLanguage] = useState("en");
-  const [country, setCountry] = useState("us");
   const fetchData = async (searchQuery: string, page: number) => {
     try {
       setLoading(true); // 로딩 시작
@@ -95,15 +93,16 @@ const Home = () => {
       setNewsLoading(false);
     }
   };
-  const fetchNews2 = async (searchQuery: string, page: number) => {
+  const fetchNews2 = async (searchQuery: string, page: number, category: string) => {
     try {
       setNews2Loading(true);
       const res = await fetch(
-        `https://apiprojectserver-production.up.railway.app/api/news2?q=${searchQuery}&category=${category}&language=${language}&country=${country}&page=${page}&pageSize=${itemsPerPage}`
+        `https://apiprojectserver-production.up.railway.app/api/news2?q=${searchQuery}&category=${category}&language=en&country=us&page=${page}&pageSize=${itemsPerPage}`
       );
       const articles = await res.json();
       const filteredArticles = articles.filter(
-        (article:News2Item) => article.urlToImage && !article.title.toLowerCase().includes("removed")
+        (article: News2Item) =>
+          article.urlToImage && !article.title.toLowerCase().includes("removed")
       );
       if (filteredArticles && filteredArticles.length > 0) {
         setNews2((prevItems) => [...prevItems, ...filteredArticles]);
@@ -115,8 +114,7 @@ const Home = () => {
     } finally {
       setNews2Loading(false);
     }
-};
-
+  };
 
   let timer: NodeJS.Timeout;
   const resizeWindow = () => {
@@ -171,18 +169,14 @@ const Home = () => {
           width={width}
           news2={news2}
           category={category}
-          language={language}
-          country={country}
           news2HasMore={news2HasMore}
           news2Loading={news2Loading}
           news2PerPage={news2PerPage}
           fetchNews2={fetchNews2}
           setNews2={setNews2}
+          setCategory={setCategory}
           setNews2HasMore={setNews2HasMore}
           setNews2Loading={setNews2Loading}
-          setCategory={setCategory}
-          setLanguage={setLanguage}
-          setCountry={setCountry}
         />
       </div>
       <User windowWidth={windowWidth} />

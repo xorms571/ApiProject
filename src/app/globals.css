@@ -24,10 +24,12 @@ body {
   overflow: hidden;
 }
 .item > a > div > img {
-  transition: scale 0.2s;
+  transition: all 0.2s;
+  opacity: .9;
 }
 .item:hover > a > div > img {
   scale: 1.2;
+  opacity: 1;
 }
 
 /* 슬라이드 애니메이션 정의 */

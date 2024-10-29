@@ -38,7 +38,7 @@ const ShoppingList = ({ currentitems, loading, width }: ShoppingListProps) => {
               href={item.link}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${width ? "w-2/5 z-10" : ""} shoppingImg`}
+              className={`${width ? "w-2/5 z-10" : ""} shoppingImg bg-stone-300`}
             >
               <div className="overflow-hidden">
                 <Image
