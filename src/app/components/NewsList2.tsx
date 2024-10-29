@@ -53,7 +53,10 @@ const NewsList2 = ({
     setCurrentPage(1); // 페이지를 1로 초기화
     setCategory(category);
     fetchNews2(query, currentPage, category);
-  }, [currentPage, category]);
+  }, [category]);
+  useEffect(()=>{
+    fetchNews2(query, currentPage, category);
+  },[currentPage])
   const loadMoreItems = () => {
     if (news2HasMore && !news2Loading) {
       setCurrentPage((prevPage) => prevPage + 1); // 페이지 증가
