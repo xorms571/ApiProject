@@ -56,7 +56,7 @@ body {
 .childContainer {
   gap: 1vw;
 }
-.news:last-child{
+.news:last-child {
   margin-bottom: 3vh;
 }
 
@@ -79,10 +79,13 @@ body {
   .item {
     width: calc(33% - 6px);
   }
-  .newsItem{
+  .news2 > .item > div {
+    height: 15vw;
+  }
+  .newsItem {
     width: calc(33% - 6px);
   }
-  .newsItem>div{
+  .newsItem > div {
     height: 15vw;
   }
   .shoppingImg > div:first-child {
@@ -109,8 +112,11 @@ body {
     display: flex;
     align-items: center;
   }
-  .newsItem{
+  .newsItem {
     width: 100%;
+  }
+  .news2 > .item > div {
+    height: 100%;
   }
   .shoppingImg {
     overflow: hidden;

@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import News from "./components/News";
+import NewsList2 from "./components/NewsList2";
 import Shopping from "./components/Shopping";
 import User from "./components/User";
 import axios from "axios";
-import NewsList2 from "./components/NewsList2";
 export interface ShoppingItem {
   title: string;
   link: string;
@@ -128,7 +128,9 @@ const Home = () => {
   useEffect(() => {
     setWindowWidth(window.innerWidth);
     window.addEventListener("resize", resizeWindow);
-    setItemPerPage(window.innerWidth > 1200 ? 9 : 6);
+    setItemPerPage(window.innerWidth > 700 ? 9 : 3);
+    setNewsPerPage(window.innerWidth > 700 ? 6 : 3);
+    setNews2PerPage(window.innerWidth > 700 ? 6 : 3);
     return () => {
       window.removeEventListener("resize", resizeWindow);
     };

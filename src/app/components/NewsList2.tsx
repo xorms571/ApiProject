@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { News2Item } from "../page";
+import Link from "next/link";
 import Pagination from "./Pagination";
 import Image from "next/image";
 import kOnzy from "/public/kOnzy.gif";
@@ -127,7 +127,7 @@ const NewsList2 = ({
       <ul
         className={`${
           width ? "my-3" : "my-8"
-        } flex flex-wrap gap-3 justify-normal itemList items-center`}
+        } news2 flex flex-wrap gap-3 justify-normal itemList items-center`}
       >
         {news2Loading ? (
           <p
@@ -143,7 +143,7 @@ const NewsList2 = ({
               key={index}
               className={`${
                 width ? "flex items-center" : ""
-              } newsItem hover:shadow-lg hover:bg-white hover:text-stone-800 bg-stone-50 text-stone-500 overflow-hidden rounded-lg border`}
+              } item hover:shadow-lg hover:bg-white hover:text-stone-800 bg-stone-50 text-stone-500 overflow-hidden rounded-lg border`}
               style={{
                 width: width ? "calc(33.3% - 8px)" : "",
               }}
@@ -193,7 +193,7 @@ const NewsList2 = ({
                 <div
                   className={`${
                     width ? "h-20 border-y" : "h-2/3 border-t"
-                  } overflow-y-scroll pl-2`}
+                  } overflow-y-scroll pl-2 bg-white`}
                 >
                   <span
                     className="text-xs"
