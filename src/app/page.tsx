@@ -1,38 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { News2Item, NewsItem, ShoppingItem, WeatherData } from "./interfaces";
 import News from "./components/News";
 import NewsList2 from "./components/NewsList2";
 import Shopping from "./components/Shopping";
 import User from "./components/User";
 import axios from "axios";
-export interface ShoppingItem {
-  title: string;
-  link: string;
-  image: string;
-  lprice: string;
-  hprice: string;
-  mallName: string;
-  productId: string;
-}
-export interface NewsItem {
-  title: string;
-  link: string;
-  description: string;
-  pubDate: Date;
-}
-export interface News2Item {
-  source: {
-    id: string | null;
-    name: string;
-  };
-  author: string | null;
-  title: string;
-  description: string;
-  url: string;
-  urlToImage: string | null;
-  publishedAt: string;
-  content: string | null;
-}
+import Weather from "./components/Weather";
 const Home = () => {
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true); // 추가 데이터 여부
@@ -48,6 +22,8 @@ const Home = () => {
   const [news2PerPage, setNews2PerPage] = useState(6); // 페이지 당 게시물 수
   const [windowWidth, setWindowWidth] = useState(Number);
   const [category, setCategory] = useState("general");
+  const [weather, setWeather] = useState<WeatherData[]>([]);
+  const [weatherLoading, setWeatherLoading] = useState(true);
   const fetchData = async (searchQuery: string, page: number) => {
     try {
       setLoading(true); // 로딩 시작
@@ -93,7 +69,11 @@ const Home = () => {
       setNewsLoading(false);
     }
   };
-  const fetchNews2 = async (searchQuery: string, page: number, category: string) => {
+  const fetchNews2 = async (
+    searchQuery: string,
+    page: number,
+    category: string
+  ) => {
     try {
       setNews2Loading(true);
       const res = await fetch(
@@ -113,6 +93,17 @@ const Home = () => {
       console.error("Error fetching news:", error);
     } finally {
       setNews2Loading(false);
+    }
+  };
+  const fetchWeather = async () => {
+    setWeatherLoading(true);
+    try {
+      const response = await axios.get("https://apiprojectserver-production.up.railway.app/api/weather");
+      setWeather(response.data);
+    } catch (error) {
+      console.error("Error fetching weather:", error);
+    } finally {
+      setWeatherLoading(false);
     }
   };
 
@@ -138,7 +129,7 @@ const Home = () => {
     <div
       className={`${
         windowWidth > 1200 ? "bg-stone-200" : "bg-stone-100"
-      } flex text-stone-700 parentContainer`}
+      } flex text-stone-700 justify-between parentContainer`}
     >
       <div className="w-4/5 childContainer flex flex-col">
         <Shopping
@@ -179,7 +170,20 @@ const Home = () => {
           setNews2Loading={setNews2Loading}
         />
       </div>
-      <User windowWidth={windowWidth} />
+      <div className="childContainer2 w-full">
+        <div className="flex flex-col title">
+          <div className={`user w-full h-fit ${windowWidth > 1200 ? "bg-stone-100 border":""} rounded-lg p-3 flex flex-col gap-2 text-sm`}>
+            <h1 className="font-extrabold text-2xl">API Project</h1>
+          </div>
+          <User windowWidth={windowWidth} />
+        </div>
+        <Weather
+          windowWidth={windowWidth}
+          fetchWeather={fetchWeather}
+          weatherLoading={weatherLoading}
+          weather={weather}
+        />
+      </div>
     </div>
   );
 };

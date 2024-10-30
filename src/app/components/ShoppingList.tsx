@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import kOnzy from "/public/kOnzy.gif";
-import { ShoppingItem } from "../page";
+import { ShoppingItem } from "../interfaces";
 type ShoppingListProps = {
   currentitems: ShoppingItem[];
   loading: boolean;

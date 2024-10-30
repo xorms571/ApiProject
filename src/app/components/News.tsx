@@ -1,9 +1,9 @@
 "use client";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Pagination from "../components/Pagination";
-import { NewsItem } from "../page";
 import CompoTop from "./CompoTop";
 import NewsList from "./NewsList";
+import { NewsItem } from "../interfaces";
 type NewsProps = {
   windowWidth: number;
   newsPerPage: number;

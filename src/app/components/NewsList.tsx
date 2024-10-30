@@ -1,7 +1,7 @@
 import Link from "next/link";
 import kOnzy from "/public/kOnzy.gif";
 import Image from "next/image";
-import { NewsItem } from "../page";
+import { NewsItem } from "../interfaces";
 type NewsListProps = {
   currentnews: NewsItem[];
   newsLoading: boolean;

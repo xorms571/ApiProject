@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { News2Item } from "../page";
 import Link from "next/link";
 import Pagination from "./Pagination";
 import Image from "next/image";
 import kOnzy from "/public/kOnzy.gif";
 import CompoTop from "./CompoTop";
+import { News2Item } from "../interfaces";
 type NewsList2Props = {
   windowWidth: number;
   width: boolean;

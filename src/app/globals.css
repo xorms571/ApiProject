@@ -31,6 +31,9 @@ body {
   scale: 1.2;
   opacity: 1;
 }
+.user{
+  margin-bottom: 1vw;
+}
 
 /* 슬라이드 애니메이션 정의 */
 @keyframes slide {
@@ -52,7 +55,7 @@ body {
 .parentContainer {
   padding: 3vh 5vw 0 5vw;
 }
-.user {
+.childContainer2 {
   margin-left: 1vw;
 }
 .childContainer {
@@ -71,9 +74,19 @@ body {
     gap: 10vw;
     margin-bottom: 10vw;
   }
+  .childContainer2{
+    margin-left: 0;
+    display: flex;
+    gap: 0.75rem;
+    align-items: end;
+    margin-bottom: 5vw;
+  }
   .user {
     width: 100%;
-    margin: 5vw 0;
+    margin: 0;
+  }
+  .user button{
+    padding: 2px 5px;
   }
   .itemList {
     justify-content: center;
@@ -100,13 +113,6 @@ body {
 @media (max-width: 700px) {
   .parentContainer {
     flex-direction: column-reverse;
-  }
-  .childContainer {
-    width: 100%;
-  }
-  .user {
-    width: 100%;
-    margin: 5vw 0;
   }
   .item {
     width: 100%;
@@ -137,5 +143,8 @@ body {
   }
   .shoppingImg > div:first-child > img {
     object-fit: cover;
+  }
+  .title{
+    width: 100%;
   }
 }

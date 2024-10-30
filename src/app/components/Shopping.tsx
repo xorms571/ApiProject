@@ -1,9 +1,9 @@
 "use client";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { ShoppingItem } from "../page";
 import Pagination from "../components/Pagination";
 import CompoTop from "./CompoTop";
 import ShoppingList from "./ShoppingList";
+import { ShoppingItem } from "../interfaces";
 export type ShoppingProps = {
   windowWidth: number;
   itemsPerPage: number;
