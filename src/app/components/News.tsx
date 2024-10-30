@@ -63,10 +63,10 @@ const News = ({
       } text-stone-600 flex flex-col justify-between`}
     >
       <CompoTop
+        windowWidth={windowWidth}
         handleSearch={handleSearch}
         query={query}
         setQuery={setQuery}
-        width={width}
         title="네이버 API 뉴스"
       />
       <NewsList

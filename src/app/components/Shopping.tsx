@@ -68,10 +68,10 @@ const Shopping = ({
       style={{ minHeight: width ? "20vh" : "" }}
     >
       <CompoTop
+        windowWidth={windowWidth}
         handleSearch={handleSearch}
         query={query}
         setQuery={setQuery}
-        width={width}
         title="네이버 API 쇼핑"
       />
       <ShoppingList

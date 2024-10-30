@@ -54,9 +54,9 @@ const NewsList2 = ({
     setCategory(category);
     fetchNews2(query, currentPage, category);
   }, [category]);
-  useEffect(()=>{
+  useEffect(() => {
     fetchNews2(query, currentPage, category);
-  },[currentPage])
+  }, [currentPage]);
   const loadMoreItems = () => {
     if (news2HasMore && !news2Loading) {
       setCurrentPage((prevPage) => prevPage + 1); // 페이지 증가
@@ -78,10 +78,10 @@ const NewsList2 = ({
       } text-stone-600 flex flex-col justify-between`}
     >
       <CompoTop
+        windowWidth={windowWidth}
         handleSearch={handleSearch}
         query={query}
         setQuery={setQuery}
-        width={width}
         title="News API"
         select={true}
         category={category}

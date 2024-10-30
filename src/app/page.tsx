@@ -98,7 +98,9 @@ const Home = () => {
   const fetchWeather = async () => {
     setWeatherLoading(true);
     try {
-      const response = await axios.get("https://apiprojectserver-production.up.railway.app/api/weather");
+      const response = await axios.get(
+        "https://apiprojectserver-production.up.railway.app/api/weather"
+      );
       setWeather(response.data);
     } catch (error) {
       console.error("Error fetching weather:", error);
@@ -131,7 +133,7 @@ const Home = () => {
         windowWidth > 1200 ? "bg-stone-200" : "bg-stone-100"
       } flex text-stone-700 justify-between parentContainer`}
     >
-      <div className="w-4/5 childContainer flex flex-col">
+      <div className="w-9/12 childContainer flex flex-col">
         <Shopping
           items={items}
           itemsPerPage={itemsPerPage}
@@ -172,8 +174,14 @@ const Home = () => {
       </div>
       <div className="childContainer2 w-full">
         <div className="flex flex-col title">
-          <div className={`user w-full h-fit ${windowWidth > 1200 ? "bg-stone-100 border":""} rounded-lg p-3 flex flex-col gap-2 text-sm`}>
-            <h1 className="font-extrabold text-2xl">API Project</h1>
+          <div
+            className={`user w-full h-fit ${
+              windowWidth > 1200 ? "bg-stone-100 border" : ""
+            } rounded-lg p-3 flex text-sm justify-between items-center`}
+          >
+            <h1 className={`${windowWidth>1200? 'text-center':''} font-extrabold text-3xl w-full`}>
+              API{windowWidth > 1200 ? "" : <br />} Project
+            </h1>
           </div>
           <User windowWidth={windowWidth} />
         </div>

@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
 type CompoProps = {
-  width: boolean;
   handleSearch: (e: React.FormEvent) => void;
   query: string;
   category?: string;
@@ -8,9 +7,9 @@ type CompoProps = {
   setCategory?: React.Dispatch<React.SetStateAction<string>>;
   title: string;
   select?: boolean;
+  windowWidth:number
 };
 const CompoTop = ({
-  width,
   handleSearch,
   query,
   setQuery,
@@ -18,10 +17,11 @@ const CompoTop = ({
   select,
   category,
   setCategory,
+  windowWidth
 }: CompoProps) => {
   return (
-    <div className={`${width ? "flex items-end justify-between" : ""} w-full`}>
-      <h1 className={`${width ? "text-lg" : "mb-3 text-2xl"} font-bold`}>
+    <div className={`${windowWidth>720 ? "flex items-end justify-between" : ""} w-full compoTop`}>
+      <h1 className={`${windowWidth>720 ? "text-lg" : "mb-3 text-2xl"} font-bold`}>
         {title}
       </h1>
       <form
