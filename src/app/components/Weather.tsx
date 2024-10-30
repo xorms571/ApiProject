@@ -2,13 +2,14 @@
 import { useEffect } from "react";
 import Image from "next/image";
 import kOnzy from "/public/kOnzy.gif";
+import { WeatherData } from "../interfaces";
 //import 구문을 type-only로 지정하여 해결
 
 type WeatherProps = {
   fetchWeather: () => Promise<void>;
   weatherLoading: boolean;
   windowWidth: number;
-  weather: any[];
+  weather: WeatherData[];
 };
 const Weather = ({
   fetchWeather,
