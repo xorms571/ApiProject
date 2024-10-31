@@ -7,6 +7,7 @@ import Shopping from "./components/Shopping";
 import User from "./components/User";
 import axios from "axios";
 import Weather from "./components/Weather";
+import VisitorChart from "./components/VisitorChart";
 const Home = () => {
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true); // 추가 데이터 여부
@@ -126,6 +127,19 @@ const Home = () => {
       window.removeEventListener("resize", resizeWindow);
     };
   }, [windowWidth]);
+
+
+  useEffect(() => {
+    const incrementVisitorCount = async () => {
+      try {
+        await axios.get("http://localhost:5000/api/visitors");
+      } catch (error) {
+        console.error("Error incrementing visitor count:", error);
+      }
+    };
+    incrementVisitorCount();
+  }, []);
+
   const width = windowWidth > 1200;
   return (
     <div
@@ -172,18 +186,10 @@ const Home = () => {
           setNews2Loading={setNews2Loading}
         />
       </div>
-      <div className="childContainer2 w-full">
-        <div className="flex flex-col title">
-          <div
-            className={`user w-full h-fit ${
-              windowWidth > 1200 ? "bg-stone-100 border" : ""
-            } rounded-lg p-3 flex text-sm justify-between items-center`}
-          >
-            <h1 className={`${windowWidth>1200? 'text-center':''} font-extrabold text-3xl w-full`}>
-              API{windowWidth > 1200 ? "" : <br />} Project
-            </h1>
-          </div>
+      <div className="childContainer2 w-3/12">
+        <div>
           <User windowWidth={windowWidth} />
+          <VisitorChart windowWidth={windowWidth}/>
         </div>
         <Weather
           windowWidth={windowWidth}

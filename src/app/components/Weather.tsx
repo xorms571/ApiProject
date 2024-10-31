@@ -32,7 +32,7 @@ const Weather = ({
         </p>
       ) : (
         <>
-          <h2 className="font-bold mb-2">OpenWeather API 전국날씨</h2>
+          <h2 className="font-bold mb-2">전국날씨 API</h2>
           <ul className="w-full h-40 overflow-y-scroll">
             {weather.map((x) => (
               <li
