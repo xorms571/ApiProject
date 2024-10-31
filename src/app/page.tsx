@@ -128,11 +128,12 @@ const Home = () => {
     };
   }, [windowWidth]);
 
-
   useEffect(() => {
     const incrementVisitorCount = async () => {
       try {
-        await axios.get("https://apiprojectserver-production.up.railway.app/api/visitors");
+        await axios.get(
+          "https://apiprojectserver-production.up.railway.app/api/visitors"
+        );
       } catch (error) {
         console.error("Error incrementing visitor count:", error);
       }
@@ -189,14 +190,14 @@ const Home = () => {
       <div className="childContainer2 w-3/12">
         <div>
           <User windowWidth={windowWidth} />
-          <VisitorChart windowWidth={windowWidth}/>
+          <Weather
+            windowWidth={windowWidth}
+            fetchWeather={fetchWeather}
+            weatherLoading={weatherLoading}
+            weather={weather}
+          />
         </div>
-        <Weather
-          windowWidth={windowWidth}
-          fetchWeather={fetchWeather}
-          weatherLoading={weatherLoading}
-          weather={weather}
-        />
+        <VisitorChart windowWidth={windowWidth} />
       </div>
     </div>
   );

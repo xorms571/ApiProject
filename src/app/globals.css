@@ -64,7 +64,7 @@ body {
 .news:last-child {
   margin-bottom: 3vh;
 }
-.weather{
+.visitors{
   margin-top: 1vw;
 }
 
@@ -90,20 +90,16 @@ body {
     height: inherit;
     display: inline;
   }
-  .visitors{
+  .weather{
     margin-top: 0.75rem;
     height: calc(60% - 0.375rem);;
-  }
-  .weather{
-    margin-top: 0;
-    height: inherit;
-  }
-  .weather>ul{
-    height: 280px;
   }
   .user {
     margin: 0;
     height: calc(40% - 0.375rem);;
+  }
+  .visitors{
+    margin-top: 0;
   }
   .user button{
     padding: 2px 5px;
@@ -135,6 +131,18 @@ body {
   }
 }
 @media (max-width: 700px) {
+  .childContainer2>div:first-child{
+    display: flex;
+    gap: 0.75rem;
+  }
+  .weather{
+    margin: 0;
+    height: auto;
+  }
+  .user {
+    margin: 0;
+    height: inherit;
+  }
   .childContainer2>div{
     width: 100%;
   }
