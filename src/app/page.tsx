@@ -132,7 +132,7 @@ const Home = () => {
   useEffect(() => {
     const incrementVisitorCount = async () => {
       try {
-        await axios.get("http://localhost:5000/api/visitors");
+        await axios.get("https://apiprojectserver-production.up.railway.app/api/visitors");
       } catch (error) {
         console.error("Error incrementing visitor count:", error);
       }
