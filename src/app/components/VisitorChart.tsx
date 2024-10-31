@@ -32,7 +32,7 @@ const VisitorChart = ({windowWidth}:VisitorChartProps) => {
     const fetchVisitorCount = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/visitor-count"
+          "https://apiprojectserver-production.up.railway.app/api/visitor-count"
         );
 
         // response.data에서 count 값을 추출
