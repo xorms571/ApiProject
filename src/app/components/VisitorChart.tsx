@@ -33,7 +33,9 @@ const VisitorChart = ({ windowWidth }: VisitorChartProps) => {
     // 오늘 방문자 수 증가
     const incrementVisitor = async () => {
       try {
-        await axios.get("https://apiprojectserver-production.up.railway.app/api/visitor-count");
+        await axios.get(
+          "https://apiprojectserver-production.up.railway.app/api/visitor-count"
+        );
       } catch (error) {
         console.error("Error incrementing visitor count:", error);
       }
@@ -73,22 +75,22 @@ const VisitorChart = ({ windowWidth }: VisitorChartProps) => {
     scales: {
       y: {
         ticks: {
-          callback: function(value:any) {
-            return typeof value === 'number' ? Math.floor(value) : value; // 소수점 제거
+          callback: function (value: number | string) {
+            return typeof value === "number" ? Math.floor(value) : value; // 소수점 제거
           },
           autoSkip: true,
           maxTicksLimit: 10,
           stepSize: 1, // Y축 값 간격 설정
         },
-      }
+      },
     },
   };
 
   return (
     <div
-    className={`visitors w-full h-fit ${
-      windowWidth > 1200 ? "bg-stone-100" : "bg-stone-50"
-    } border rounded-lg p-3 text-sm`}
+      className={`visitors w-full h-fit ${
+        windowWidth > 1200 ? "bg-stone-100" : "bg-stone-50"
+      } border rounded-lg p-3 text-sm`}
     >
       <h2>방문자 차트</h2>
       <Line data={chartData} options={options} />
