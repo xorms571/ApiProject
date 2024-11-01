@@ -128,19 +128,6 @@ const Home = () => {
     };
   }, [windowWidth]);
 
-  useEffect(() => {
-    const incrementVisitorCount = async () => {
-      try {
-        await axios.get(
-          "https://apiprojectserver-production.up.railway.app/api/visitors"
-        );
-      } catch (error) {
-        console.error("Error incrementing visitor count:", error);
-      }
-    };
-    incrementVisitorCount();
-  }, []);
-
   const width = windowWidth > 1200;
   return (
     <div
@@ -197,7 +184,7 @@ const Home = () => {
             weather={weather}
           />
         </div>
-        <VisitorChart windowWidth={windowWidth} />
+        <VisitorChart/>
       </div>
     </div>
   );

@@ -71,3 +71,7 @@ export interface WeatherData {
   name: string;
   cod: number;
 }
+export interface VisitorData {
+  date: string;
+  count: number;
+}
