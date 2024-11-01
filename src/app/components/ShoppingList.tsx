@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import kOnzy from "/public/kOnzy.gif";
 import { ShoppingItem } from "../interfaces";
+import Loading from "./Loading";
 type ShoppingListProps = {
   currentitems: ShoppingItem[];
   loading: boolean;
-  width?: boolean;
+  width: boolean;
 };
 const ShoppingList = ({ currentitems, loading, width }: ShoppingListProps) => {
   return (
@@ -15,13 +15,7 @@ const ShoppingList = ({ currentitems, loading, width }: ShoppingListProps) => {
       } flex flex-wrap gap-3 justify-center itemList items-center`}
     >
       {loading ? (
-        <p
-          className={`${
-            width ? "h-72" : ""
-          } w-full flex justify-center items-center`}
-        >
-          <Image src={kOnzy} alt="loading" width={50} height={50} />
-        </p>
+        <Loading />
       ) : (
         currentitems.map((item, index) => (
           <li

@@ -25,16 +25,30 @@ body {
 }
 .item > a > div > img {
   transition: all 0.2s;
-  opacity: .9;
+  opacity: 0.9;
 }
 .item:hover > a > div > img {
   scale: 1.2;
   opacity: 1;
 }
-.user{
+.user {
   margin-bottom: 1vw;
 }
-
+.weather > .loading {
+  height: 214px;
+}
+.visitors > .loading {
+  height: 167px;
+}
+.shopping .loading {
+  height: 321px;
+}
+.news .loading {
+  height: 288px;
+}
+.news2 .loading {
+  height: 280px;
+}
 /* 슬라이드 애니메이션 정의 */
 @keyframes slide {
   0% {
@@ -64,7 +78,7 @@ body {
 .news:last-child {
   margin-bottom: 3vh;
 }
-.visitors{
+.visitors {
   margin-top: 1vw;
 }
 
@@ -77,7 +91,7 @@ body {
     gap: 10vw;
     margin-bottom: 10vw;
   }
-  .childContainer2{
+  .childContainer2 {
     width: 100%;
     margin-left: 0;
     display: flex;
@@ -85,26 +99,26 @@ body {
     gap: 0.75rem;
     margin-bottom: 5vw;
   }
-  .childContainer2>div{
+  .childContainer2 > div {
     width: calc(50% - 0.375rem);
     height: inherit;
     display: inline;
   }
-  .weather{
+  .weather {
     margin-top: 0.75rem;
-    height: calc(60% - 0.375rem);;
+    height: calc(60% - 0.375rem);
   }
   .user {
     margin: 0;
-    height: calc(40% - 0.375rem);;
+    height: calc(40% - 0.375rem);
   }
-  .visitors{
+  .visitors {
     margin-top: 0;
   }
-  .user button{
+  .user button {
     padding: 2px 5px;
   }
-  .title{
+  .title {
     width: 100%;
     justify-content: space-between;
   }
@@ -129,13 +143,25 @@ body {
   .shoppingImg > div:first-child > img {
     height: 100%;
   }
+  .shopping .loading {
+    height: 639px;
+  }
+  .news .loading {
+    height: 288px;
+  }
+  .news2 .loading {
+    height: 476px;
+  }
+  .visitors > .loading {
+    height: 320px;
+  }
 }
 @media (max-width: 700px) {
-  .childContainer2>div:first-child{
+  .childContainer2 > div:first-child {
     display: flex;
     gap: 0.75rem;
   }
-  .weather{
+  .weather {
     margin: 0;
     height: auto;
   }
@@ -143,7 +169,7 @@ body {
     margin: 0;
     height: inherit;
   }
-  .childContainer2>div{
+  .childContainer2 > div {
     width: 100%;
   }
   .parentContainer {
@@ -178,5 +204,17 @@ body {
   }
   .shoppingImg > div:first-child > img {
     object-fit: cover;
+  }
+  .shopping .loading {
+    height: 324px;
+  }
+  .news .loading {
+    height: 438px;
+  }
+  .news2 .loading {
+    height: 324px;
+  }
+  .visitors > .loading {
+    height: 155px;
   }
 }

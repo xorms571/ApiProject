@@ -1,7 +1,6 @@
 import Link from "next/link";
-import kOnzy from "/public/kOnzy.gif";
-import Image from "next/image";
 import { NewsItem } from "../interfaces";
+import Loading from "./Loading";
 type NewsListProps = {
   currentnews: NewsItem[];
   newsLoading: boolean;
@@ -15,13 +14,7 @@ const NewsList = ({ currentnews, newsLoading, width }: NewsListProps) => {
       } flex flex-wrap gap-3 justify-center itemList items-center`}
     >
       {newsLoading ? (
-        <p
-          className={`${
-            width ? "h-72" : ""
-          } w-full flex justify-center items-center`}
-        >
-          <Image src={kOnzy} alt="loading" width={50} height={50} />
-        </p>
+        <Loading />
       ) : (
         currentnews.map((item, index) => (
           <li

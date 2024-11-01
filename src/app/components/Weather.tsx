@@ -1,10 +1,7 @@
 "use client";
 import { useEffect } from "react";
-import Image from "next/image";
-import kOnzy from "/public/kOnzy.gif";
 import { WeatherData } from "../interfaces";
-//import 구문을 type-only로 지정하여 해결
-
+import Loading from "./Loading";
 type WeatherProps = {
   fetchWeather: () => Promise<void>;
   weatherLoading: boolean;
@@ -27,9 +24,7 @@ const Weather = ({
       } border rounded-lg p-3 text-sm`}
     >
       {weatherLoading ? (
-        <p className={`w-full flex justify-center items-center`}>
-          <Image src={kOnzy} alt="loading" width={50} height={50} />
-        </p>
+        <Loading />
       ) : (
         <>
           <h2 className="font-bold mb-2">전국날씨 API</h2>

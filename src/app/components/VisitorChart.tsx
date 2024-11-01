@@ -13,6 +13,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import Loading from "./Loading";
 
 ChartJS.register(
   CategoryScale,
@@ -28,11 +29,12 @@ type VisitorChartProps = {
 };
 const VisitorChart = ({ windowWidth }: VisitorChartProps) => {
   const [visitorStats, setVisitorStats] = useState<VisitorData[]>([]);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     // 오늘 방문자 수 증가
     const incrementVisitor = async () => {
       try {
+        setLoading(true);
         await axios.get(
           "https://apiprojectserver-production.up.railway.app/api/visitor-count"
         );
@@ -44,6 +46,7 @@ const VisitorChart = ({ windowWidth }: VisitorChartProps) => {
     // 날짜별 방문자 데이터 가져오기
     const fetchVisitorStats = async () => {
       try {
+        setLoading(true);
         const response = await axios.get<VisitorData[]>(
           "https://apiprojectserver-production.up.railway.app/api/visitor-stats"
         );
@@ -55,6 +58,7 @@ const VisitorChart = ({ windowWidth }: VisitorChartProps) => {
 
     incrementVisitor(); // 첫 로드 시 오늘 방문자 수 증가
     fetchVisitorStats(); // 방문자 데이터 가져오기
+    setLoading(false);
   }, []);
 
   // 차트 데이터 포맷
@@ -92,7 +96,11 @@ const VisitorChart = ({ windowWidth }: VisitorChartProps) => {
         windowWidth > 1200 ? "bg-stone-100" : "bg-stone-50"
       } border rounded-lg p-3 text-sm`}
     >
-      <Line className="min-h-full" data={chartData} options={options} />
+      {loading ? (
+        <Loading />
+      ) : (
+        <Line className="min-h-full" data={chartData} options={options} />
+      )}
     </div>
   );
 };

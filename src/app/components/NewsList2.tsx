@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
+import { News2Item } from "../interfaces";
 import Link from "next/link";
 import Pagination from "./Pagination";
-import Image from "next/image";
-import kOnzy from "/public/kOnzy.gif";
 import CompoTop from "./CompoTop";
-import { News2Item } from "../interfaces";
+import Loading from "./Loading";
 type NewsList2Props = {
   windowWidth: number;
   width: boolean;
@@ -93,13 +92,7 @@ const NewsList2 = ({
         } news2 flex flex-wrap gap-3 justify-normal itemList items-center`}
       >
         {news2Loading ? (
-          <p
-            className={`${
-              width ? "h-64" : ""
-            } w-full flex justify-center items-center`}
-          >
-            <Image src={kOnzy} alt="loading" width={50} height={50} />
-          </p>
+          <Loading />
         ) : (
           currentnews2.map((article, index) => (
             <li
