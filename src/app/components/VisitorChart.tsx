@@ -92,8 +92,7 @@ const VisitorChart = ({ windowWidth }: VisitorChartProps) => {
         windowWidth > 1200 ? "bg-stone-100" : "bg-stone-50"
       } border rounded-lg p-3 text-sm`}
     >
-      <h2>방문자 차트</h2>
-      <Line data={chartData} options={options} />
+      <Line className="min-h-full" data={chartData} options={options} />
     </div>
   );
 };
