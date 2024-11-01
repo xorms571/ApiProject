@@ -184,7 +184,7 @@ const Home = () => {
             weather={weather}
           />
         </div>
-        <VisitorChart/>
+        <VisitorChart windowWidth={windowWidth}/>
       </div>
     </div>
   );
