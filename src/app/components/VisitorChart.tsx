@@ -68,6 +68,22 @@ const VisitorChart = ({ windowWidth }: VisitorChartProps) => {
     ],
   };
 
+  // 차트 옵션 설정
+  const options = {
+    scales: {
+      y: {
+        ticks: {
+          callback: function(value:any) {
+            return typeof value === 'number' ? Math.floor(value) : value; // 소수점 제거
+          },
+          autoSkip: true,
+          maxTicksLimit: 10,
+          stepSize: 1, // Y축 값 간격 설정
+        },
+      }
+    },
+  };
+
   return (
     <div
     className={`visitors w-full h-fit ${
@@ -75,7 +91,7 @@ const VisitorChart = ({ windowWidth }: VisitorChartProps) => {
     } border rounded-lg p-3 text-sm`}
     >
       <h2>방문자 차트</h2>
-      <Line data={chartData} />
+      <Line data={chartData} options={options} />
     </div>
   );
 };
